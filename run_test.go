@@ -5,16 +5,32 @@ import (
 )
 
 func TestRun(t *testing.T) {
-	//runCmd := runCmd{
-	//	command: "package",
-	//	args:    []string{"softleader-core", "project/jasmine/uat/core.yaml"},
-	//	image:   "softleader/helm",
-	//	pwd:     "/Users/Matt/GitHub/softleader-charts",
-	//}
-	//err := runCmd.run()
-	//if err != nil {
-	//	t.Error(err)
-	//}
+//	wd, err := os.Getwd()
+//	if err != nil {
+//		t.Error(err)
+//	}
+//	tmp, err := ioutil.TempDir(wd, "helm-run")
+//	if err != nil {
+//		t.Error(err)
+//	}
+//	defer os.RemoveAll(tmp)
+//
+//	runCmd := runCmd{
+//		command: path.Join(strings.Replace(tmp, wd+"/", "", -1), "hello"),
+//		args:    []string{"Matt"},
+//		image:   "softleader/helm",
+//		pwd:     wd,
+//		local:   true,
+//	}
+//
+//	ioutil.WriteFile(path.Join(tmp, "hello"), []byte(`
+//echo "hello $@"
+//`), defaultDirectoryPermission)
+//
+//	err = runCmd.run()
+//	if err != nil {
+//		t.Error(err)
+//	}
 }
 
 func TestGetCommandContents(t *testing.T) {

@@ -14,7 +14,6 @@ import (
 	"strings"
 	"fmt"
 	"github.com/docker/docker/pkg/stdcopy"
-	"errors"
 )
 
 const (
@@ -32,9 +31,10 @@ type runCmd struct {
 	image           string
 	alwaysPullImage bool
 	rm              bool
+	local           bool
 }
 
-func (cmd *runCmd) run() (err error) {
+func (cmd *runCmd) run() error {
 
 	ctx := context.Background()
 	cli, err := client.NewEnvClient()
@@ -45,19 +45,27 @@ func (cmd *runCmd) run() (err error) {
 	if cmd.alwaysPullImage {
 		_, err = cli.ImagePull(ctx, cmd.image, types.ImagePullOptions{})
 		if err != nil {
-			return
+			return err
 		}
 	}
 
-	shell, err := getCommandContents(cmd.command)
-	if err != nil {
-		return err
+	if cmd.local {
+		// verify local command file exists
+		_, err := os.Stat(cmd.command)
+		if os.IsNotExist(err) {
+			return fmt.Errorf("command '%s' does not exist", cmd.command)
+		}
+	} else {
+		shell, err := getCommandContents(cmd.command)
+		if err != nil {
+			return err
+		}
+		err = ioutil.WriteFile(path.Join(cmd.pwd, cmd.command), []byte(shell), defaultDirectoryPermission)
+		if err != nil {
+			return err
+		}
+		defer os.Remove(path.Join(cmd.pwd, cmd.command))
 	}
-	err = ioutil.WriteFile(path.Join(cmd.pwd, cmd.command), []byte(shell), defaultDirectoryPermission)
-	if err != nil {
-		return
-	}
-	defer os.Remove(path.Join(cmd.pwd, cmd.command))
 
 	resp, err := cli.ContainerCreate(ctx,
 		&container.Config{
@@ -75,7 +83,7 @@ func (cmd *runCmd) run() (err error) {
 			},
 		}, nil, "")
 	if err != nil {
-		return
+		return err
 	}
 	if cmd.rm {
 		defer func(containerID string) {
@@ -88,7 +96,7 @@ func (cmd *runCmd) run() (err error) {
 	}
 
 	if err = cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
-		return
+		return err
 	}
 
 	out, err := cli.ContainerLogs(ctx, resp.ID, types.ContainerLogsOptions{
@@ -97,18 +105,18 @@ func (cmd *runCmd) run() (err error) {
 		Follow:     true,
 	})
 	if err != nil {
-		return
+		return err
 	}
 
 	stdcopy.StdCopy(os.Stdout, os.Stderr, out)
-	return
+	return nil
 }
 
 func getCommandContents(command string) (contents string, err error) {
 	gc := github.NewClient(nil)
 	fileContent, _, _, err := gc.Repositories.GetContents(context.Background(), commandOwner, commandRepo, commandPathRoot+"/"+command, nil)
 	if err != nil {
-		return "", errors.New(fmt.Sprintf("Failed to get command: %s", err.Error()))
+		return "", fmt.Errorf("failed to get command: %s", err.Error())
 	}
 	return fileContent.GetContent()
 }
