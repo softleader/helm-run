@@ -31,7 +31,7 @@ type runCmd struct {
 	image           string
 	alwaysPullImage bool
 	rm              bool
-	entryPoint      string
+	entryPoint      []string
 	local           bool
 }
 
@@ -71,9 +71,9 @@ func (cmd *runCmd) run() error {
 	resp, err := cli.ContainerCreate(ctx,
 		&container.Config{
 			Image:      cmd.image,
-			Entrypoint: strslice.StrSlice{cmd.entryPoint},
+			Entrypoint: cmd.strSlice(),
 			WorkingDir: workDir,
-			Cmd:        []string{"-c", strings.Join(append([]string{"./" + cmd.command}, cmd.args...), " ")},
+			Cmd:        []string{strings.Join(append([]string{"./" + cmd.command}, cmd.args...), " ")},
 		}, &container.HostConfig{
 			Mounts: []mount.Mount{
 				{
@@ -111,6 +111,14 @@ func (cmd *runCmd) run() error {
 
 	stdcopy.StdCopy(os.Stdout, os.Stderr, out)
 	return nil
+}
+
+func (cmd *runCmd) strSlice() strslice.StrSlice {
+	slice := make(strslice.StrSlice, len(cmd.entryPoint))
+	for i, v := range cmd.entryPoint {
+		slice[i] = v
+	}
+	return slice
 }
 
 func getCommandContents(command string) (contents string, err error) {

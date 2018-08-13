@@ -26,12 +26,12 @@ $ helm run [flags] COMMAND [ARGS]
 
 ```sh
 Flags:
-      --always-pull-image   always pull image before running command
-      --entrypoint string   the ENTRYPOINT of the image (default "/bin/sh")
-  -h, --help                help for helm
-      --image string        image for running command (default "softleader/helm")
-      --local               command store on local storage, not on github
-      --rm                  automatically remove the container when it exits (default true)
+      --always-pull-image        always pull image before running command
+      --entrypoint stringArray   the ENTRYPOINT of the image (default [/bin/sh,-c])
+  -h, --help                     help for helm
+      --image string             image for running command (default "softleader/helm")
+      --local                    command store on local storage, not on github
+      --rm                       automatically remove the container when it exits (default true)
 ```
 
 ### Command
