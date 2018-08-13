@@ -6,6 +6,8 @@
 Run command in container-based environment, commands store on [softleader/dockerfile/helm](https://github.com/softleader/dockerfile/tree/master/helm
 )
 
+![](./artitecture.svg)
+
 ## Install
 
 Fetch the latest binary release of helm-run and install it:
