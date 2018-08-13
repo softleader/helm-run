@@ -15,7 +15,7 @@ $ helm plugin install https://github.com/softleader/helm-run
 ```
 
 ## Usage
- 
+
 ```sh
 $ helm run [flags] COMMAND [ARGS]
 ```
@@ -28,3 +28,12 @@ Flags:
   -h, --help                help for helm
   -i, --image string        image for running command (default "softleader/helm")
 ```
+
+### Command
+
+儲存在 [softleader/dockerfile/helm](https://github.com/softleader/dockerfile/tree/master/helm
+) 的 shell 檔案名稱, *大小寫是有區分的*, 若要執行的 shell 檔案在更下層的目錄中, 則以 `/` 區隔每個目錄, 如: `$ helm run subdir/package`
+
+### Args
+
+會被繼續傳入執行 shell 的 args 中
