@@ -1,5 +1,5 @@
 hash: ca9142a353515c508a419b013025e259f29c080f1aea84f28686dcaa54c8d5a3
-updated: 2018-08-13T11:10:07.833656+08:00
+updated: 2018-08-13T12:41:01.331423+08:00
 imports:
 - name: github.com/docker/distribution
   version: 5f37adaa4107540c84856b1c4f912c9332aafae9
@@ -27,6 +27,7 @@ imports:
   - client
   - pkg/ioutils
   - pkg/longpath
+  - pkg/stdcopy
   - pkg/system
   - pkg/tlsconfig
 - name: github.com/docker/go-connections
@@ -43,6 +44,10 @@ imports:
   version: 747f93dd9b489bd56f7442b3c42bfea12800a75b
   subpackages:
   - github
+- name: github.com/google/go-querystring
+  version: 53e6ce116135b80d037921a7fdd5138cf32d7a8a
+  subpackages:
+  - query
 - name: github.com/inconshreveable/mousetrap
   version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
 - name: github.com/Microsoft/go-winio
