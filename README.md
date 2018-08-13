@@ -29,6 +29,7 @@ Flags:
       --always-pull-image   always pull image before running command
   -h, --help                help for helm
   -i, --image string        image for running command (default "softleader/helm")
+      --rm                  automatically remove the container when it exits (default true)
 ```
 
 ### Command

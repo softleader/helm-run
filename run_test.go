@@ -7,7 +7,7 @@ import (
 func TestRun(t *testing.T) {
 	//runCmd := runCmd{
 	//	command: "package",
-	//	args:    []string{"softleader-core"},
+	//	args:    []string{"softleader-core", "project/jasmine/uat/core.yaml"},
 	//	image:   "softleader/helm",
 	//	pwd:     "/Users/Matt/GitHub/softleader-charts",
 	//}

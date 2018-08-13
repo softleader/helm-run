@@ -36,6 +36,7 @@ func main() {
 	f := cmd.Flags()
 	f.StringVarP(&runCmd.image, "image", "i", "softleader/helm", "image for running command")
 	f.BoolVarP(&runCmd.alwaysPullImage, "always-pull-image", "", false, "always pull image before running command")
+	f.BoolVarP(&runCmd.rm, "rm", "", true, "automatically remove the container when it exits")
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)

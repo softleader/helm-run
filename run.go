@@ -10,9 +10,11 @@ import (
 	"github.com/docker/docker/api/types/strslice"
 	"github.com/google/go-github/github"
 	"github.com/docker/docker/api/types/mount"
-	"github.com/docker/docker/pkg/stdcopy"
 	"path"
 	"strings"
+	"github.com/kataras/iris/core/errors"
+	"fmt"
+	"github.com/docker/docker/pkg/stdcopy"
 )
 
 const (
@@ -29,6 +31,7 @@ type runCmd struct {
 	args            []string
 	image           string
 	alwaysPullImage bool
+	rm              bool
 }
 
 func (cmd *runCmd) run() (err error) {
@@ -74,13 +77,15 @@ func (cmd *runCmd) run() (err error) {
 	if err != nil {
 		return
 	}
-	defer func(containerID string) {
-		cli.ContainerRemove(ctx, containerID, types.ContainerRemoveOptions{
-			RemoveLinks:   true,
-			RemoveVolumes: true,
-			Force:         true,
-		})
-	}(resp.ID)
+	if cmd.rm {
+		defer func(containerID string) {
+			cli.ContainerRemove(ctx, containerID, types.ContainerRemoveOptions{
+				RemoveLinks:   true,
+				RemoveVolumes: true,
+				Force:         true,
+			})
+		}(resp.ID)
+	}
 
 	if err = cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
 		return
@@ -88,6 +93,7 @@ func (cmd *runCmd) run() (err error) {
 
 	out, err := cli.ContainerLogs(ctx, resp.ID, types.ContainerLogsOptions{
 		ShowStdout: true,
+		ShowStderr: true,
 		Follow:     true,
 	})
 	if err != nil {
@@ -102,7 +108,7 @@ func getCommandContents(command string) (contents string, err error) {
 	gc := github.NewClient(nil)
 	fileContent, _, _, err := gc.Repositories.GetContents(context.Background(), commandOwner, commandRepo, commandPathRoot+"/"+command, nil)
 	if err != nil {
-		return
+		return "", errors.New(fmt.Sprintf("Failed to get command: %s", err.Error()))
 	}
 	return fileContent.GetContent()
 }
