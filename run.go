@@ -12,9 +12,9 @@ import (
 	"github.com/docker/docker/api/types/mount"
 	"path"
 	"strings"
-	"github.com/kataras/iris/core/errors"
 	"fmt"
 	"github.com/docker/docker/pkg/stdcopy"
+	"errors"
 )
 
 const (
