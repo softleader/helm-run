@@ -32,7 +32,26 @@ Flags:
 ### Command
 
 儲存在 [softleader/dockerfile/helm](https://github.com/softleader/dockerfile/tree/master/helm
-) 的 shell 檔案名稱, *大小寫是有區分的*, 若要執行的 shell 檔案在更下層的目錄中, 則以 `/` 區隔每個目錄, 如: `$ helm run subdir/package`
+) 的 shell 檔案名稱, *大小寫是有區分的*
+
+若要執行的 shell 檔案在更下層的目錄中, 則以 `/` 區隔每個目錄, 如在 [softleader/dockerfile/helm](https://github.com/softleader/dockerfile/tree/master/helm
+) 的目錄為: 
+
+```sh
+.
+└── helm
+    ├── Dockerfile
+    ├── README.md
+    ├── package
+    └── subdir
+        └── mypackage
+```
+
+則執行 `mypackage` 的指令將為: 
+
+```sh
+$ helm run subdir/mypackage
+```
 
 ### Args
 
