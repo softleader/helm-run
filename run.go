@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/api/types"
 	"context"
@@ -37,7 +36,7 @@ func (cmd *runCmd) run() (err error) {
 	ctx := context.Background()
 	cli, err := client.NewEnvClient()
 	if err != nil {
-		errors.New("docker is required: " + err.Error())
+		return err
 	}
 
 	if cmd.alwaysPullImage {
