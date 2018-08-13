@@ -90,12 +90,10 @@ func (cmd *runCmd) run() (err error) {
 		return
 	}
 
-	_, err = cli.ContainerWait(ctx, resp.ID)
-	if err != nil {
-		return
-	}
-
-	out, err := cli.ContainerLogs(ctx, resp.ID, types.ContainerLogsOptions{ShowStdout: true})
+	out, err := cli.ContainerLogs(ctx, resp.ID, types.ContainerLogsOptions{
+		ShowStdout: true,
+		Follow:     true,
+	})
 	if err != nil {
 		return
 	}

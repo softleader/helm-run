@@ -6,16 +6,16 @@ import (
 )
 
 func TestRun(t *testing.T) {
-	//runCmd := runCmd{
-	//	command: "package",
-	//	args:    []string{"softleader-core"},
-	//	image:   "softleader/helm",
-	//	wd:      "/Users/Matt/GitHub/softleader-charts",
-	//}
-	//err := runCmd.run()
-	//if err != nil {
-	//	t.Error(err)
-	//}
+	runCmd := runCmd{
+		command: "package",
+		args:    []string{"softleader-core"},
+		image:   "softleader/helm",
+		wd:      "/Users/Matt/GitHub/softleader-charts",
+	}
+	err := runCmd.run()
+	if err != nil {
+		t.Error(err)
+	}
 }
 
 func TestGetCommandContents(t *testing.T) {
