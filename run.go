@@ -31,6 +31,7 @@ type runCmd struct {
 	image           string
 	alwaysPullImage bool
 	rm              bool
+	entryPoint      string
 	local           bool
 }
 
@@ -70,7 +71,7 @@ func (cmd *runCmd) run() error {
 	resp, err := cli.ContainerCreate(ctx,
 		&container.Config{
 			Image:      cmd.image,
-			Entrypoint: strslice.StrSlice{"bash"},
+			Entrypoint: strslice.StrSlice{cmd.entryPoint},
 			WorkingDir: workDir,
 			Cmd:        []string{"-c", strings.Join(append([]string{"./" + cmd.command}, cmd.args...), " ")},
 		}, &container.HostConfig{

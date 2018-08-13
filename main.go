@@ -34,9 +34,10 @@ func main() {
 		},
 	}
 	f := cmd.Flags()
-	f.StringVarP(&runCmd.image, "image", "i", "softleader/helm", "image for running command")
+	f.StringVarP(&runCmd.image, "image", "", "softleader/helm", "image for running command")
 	f.BoolVarP(&runCmd.alwaysPullImage, "always-pull-image", "", false, "always pull image before running command")
 	f.BoolVarP(&runCmd.rm, "rm", "", true, "automatically remove the container when it exits")
+	f.StringVarP(&runCmd.entryPoint, "entrypoint", "", "/bin/sh", "the ENTRYPOINT of the image")
 	f.BoolVarP(&runCmd.local, "local", "", false, "command store on local storage, not on github")
 
 	if err := cmd.Execute(); err != nil {
