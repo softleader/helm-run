@@ -27,7 +27,7 @@ func main() {
 			if err != nil {
 				return err
 			}
-			runCmd.wd = wd
+			runCmd.pwd = wd
 			runCmd.command = args[0]
 			runCmd.args = args[1:]
 			return runCmd.run()
@@ -36,7 +36,6 @@ func main() {
 	f := cmd.Flags()
 	f.StringVarP(&runCmd.image, "image", "i", "softleader/helm", "image for running command")
 	f.BoolVarP(&runCmd.alwaysPullImage, "always-pull-image", "", false, "always pull image before running command")
-	f.BoolVarP(&runCmd.rm, "rm", "", false, "automatically remove the container when it exits")
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)

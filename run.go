@@ -25,12 +25,11 @@ const (
 )
 
 type runCmd struct {
+	pwd             string
 	command         string
 	args            []string
 	image           string
 	alwaysPullImage bool
-	rm              bool
-	wd              string
 }
 
 func (cmd *runCmd) run() (err error) {
@@ -52,11 +51,11 @@ func (cmd *runCmd) run() (err error) {
 	if err != nil {
 		return err
 	}
-	err = ioutil.WriteFile(path.Join(cmd.wd, cmd.command), []byte(shell), defaultDirectoryPermission)
+	err = ioutil.WriteFile(path.Join(cmd.pwd, cmd.command), []byte(shell), defaultDirectoryPermission)
 	if err != nil {
 		return
 	}
-	defer os.Remove(path.Join(cmd.wd, cmd.command))
+	defer os.Remove(path.Join(cmd.pwd, cmd.command))
 
 	resp, err := cli.ContainerCreate(ctx,
 		&container.Config{
@@ -68,7 +67,7 @@ func (cmd *runCmd) run() (err error) {
 			Mounts: []mount.Mount{
 				{
 					Type:   mount.TypeBind,
-					Source: cmd.wd,
+					Source: cmd.pwd,
 					Target: workDir,
 				},
 			},
@@ -76,15 +75,13 @@ func (cmd *runCmd) run() (err error) {
 	if err != nil {
 		return
 	}
-	if cmd.rm {
-		defer func(containerID string) {
-			cli.ContainerRemove(ctx, containerID, types.ContainerRemoveOptions{
-				RemoveLinks:   true,
-				RemoveVolumes: true,
-				Force:         true,
-			})
-		}(resp.ID)
-	}
+	defer func(containerID string) {
+		cli.ContainerRemove(ctx, containerID, types.ContainerRemoveOptions{
+			RemoveLinks:   true,
+			RemoveVolumes: true,
+			Force:         true,
+		})
+	}(resp.ID)
 
 	if err = cli.ContainerStart(ctx, resp.ID, types.ContainerStartOptions{}); err != nil {
 		return

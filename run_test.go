@@ -10,7 +10,7 @@ func TestRun(t *testing.T) {
 		command: "package",
 		args:    []string{"softleader-core"},
 		image:   "softleader/helm",
-		wd:      "/Users/Matt/GitHub/softleader-charts",
+		pwd:     "/Users/Matt/GitHub/softleader-charts",
 	}
 	err := runCmd.run()
 	if err != nil {
