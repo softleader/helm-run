@@ -11,7 +11,6 @@ import (
 	"github.com/google/go-github/github"
 	"github.com/docker/docker/api/types/mount"
 	"path"
-	"strings"
 	"fmt"
 	"github.com/docker/docker/pkg/stdcopy"
 )
@@ -73,7 +72,7 @@ func (cmd *runCmd) run() error {
 			Image:      cmd.image,
 			Entrypoint: cmd.strSlice(),
 			WorkingDir: workDir,
-			Cmd:        []string{strings.Join(append([]string{"./" + cmd.command}, cmd.args...), " ")},
+			Cmd:        append([]string{"./" + cmd.command}, cmd.args...),
 		}, &container.HostConfig{
 			Mounts: []mount.Mount{
 				{

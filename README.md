@@ -27,7 +27,7 @@ $ helm run [flags] COMMAND [ARGS]
 ```sh
 Flags:
       --always-pull-image        always pull image before running command
-      --entrypoint stringArray   the ENTRYPOINT of the image (default [/bin/sh,-c])
+      --entrypoint stringArray   the ENTRYPOINT of the image (default [/bin/bash])
   -h, --help                     help for helm
       --image string             image for running command (default "softleader/helm")
       --local                    command store on local storage, not on github

@@ -25,7 +25,7 @@ func TestRun(t *testing.T) {
 		args:       []string{"Matt"},
 		image:      "softleader/helm",
 		pwd:        wd,
-		entryPoint: []string{"/bin/sh", "-c"},
+		entryPoint: []string{"/bin/bash"},
 		local:      true,
 	}
 
