@@ -1,0 +1,9 @@
+name: "run"
+# Version is the version of Helm plus the number of official builds for this
+# plugin
+version: "1.0.0"
+usage: "run command in container-based environment"
+description: "Run command in container-based environment."
+command: "$HELM_PLUGIN_DIR/run"
+hooks:
+  install: "$HELM_PLUGIN_DIR/install-binary.sh"

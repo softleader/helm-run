@@ -1,0 +1,20 @@
+language: go
+go:
+- 1.10.x
+sudo: required
+install:
+- curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+script:
+- make bootstrap test
+before_deploy:
+- make dist VERSION=${TRAVIS_TAG}
+deploy:
+  provider: releases
+  api_key:
+    secure: EP90CkowVaju+6yM8EXjF6FsdaGOEiC7YBs81dF+FyolnfO/FCbvQJiw6GJhO3M0iZiMmdYL80IB8PkcBNnYr/HYFkGHjDh3OfuvoEWPX03NQItta0785WA8L8eWeDJJDt3tcaQ6x6kopo6GSs7iSe2FmGbxehQCoRnEBx+BeMc6EZc9nD9O8svSEEqXI4aqF5zX5dbOYk4GjDKJiQoXxpdRJZUFSA+lIT3WDzrJ9gqJQSlH22Zi96MLbmsaZ6PD5+2V8wc7rCD/W37bI4GvL/srKcnbzN3B37BcrxOPSr3NGPQ+1rc1oELIzCxWUu8iQiTNxacpn4UuSBpkwDHAayAT+Fx/usRTKlEsanvpv26RiSOjMMKJJwcOKewq5ecvTnmbzi9wx2Nh/te9mk6fFDxZ3JPAY8zNsPbV2TJwC3EjnIRGdJ+r0wVZHeMaQdPZsftSYL+qnC8bDtvJPAKqdsEaQyiBlC4LiPX2SGAgeZfWYZDCmgindYgwm7Pp3vtO9+3jnthpFTRe/zo4igmRLlQpYw65/mT8EcsN/wPd47bJvV2nAq4c4fWd0p53ShFrnZuEMz0LBpeZolUnw88ohnOD2XOV9UHDH8wD5SwGKUoSEZ2TrXzpfmQZfolDZ8SoeTVasBt3vbHgkosGOg1hxHKFN57COYreJwfT9loAhes=
+  file: _dist/*
+  file_glob: true
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: softleader/helm-run
