@@ -22,6 +22,7 @@ fi
 
 # initArch discovers the architecture for this system.
 initArch() {
+  echo "initArch"
   ARCH=$(uname -m)
   case $ARCH in
     armv5*) ARCH="armv5";;
@@ -37,6 +38,7 @@ initArch() {
 
 # initOS discovers the operating system for this system.
 initOS() {
+  echo "initOS"
   OS=$(echo `uname`|tr '[:upper:]' '[:lower:]')
 
   case "$OS" in
@@ -51,6 +53,7 @@ initOS() {
 # verifySupported checks that the os/arch combination is supported for
 # binary builds.
 verifySupported() {
+  echo "verifySupported"
   local supported="linux-amd64\nmacos-amd64\nwindows-amd64"
   if ! echo "${supported}" | grep -q "${OS}-${ARCH}"; then
     echo "No prebuild binary for ${OS}-${ARCH}."
@@ -65,6 +68,7 @@ verifySupported() {
 
 # getDownloadURL checks the latest available version.
 getDownloadURL() {
+  echo "getDownloadURL"
   # Use the GitHub API to find the latest version for this project.
   local latest_url="https://api.github.com/repos/$PROJECT_GH/releases/latest"
   if type "curl" > /dev/null; then
@@ -77,6 +81,7 @@ getDownloadURL() {
 # downloadFile downloads the latest binary package and also the checksum
 # for that binary.
 downloadFile() {
+  echo "downloadFile"
   PLUGIN_TMP_FILE="/tmp/${PROJECT_NAME}.tgz"
   echo "Downloading $DOWNLOAD_URL"
   if type "curl" > /dev/null; then
@@ -89,6 +94,7 @@ downloadFile() {
 # installFile verifies the SHA256 for the file, then unpacks and
 # installs it.
 installFile() {
+  echo "installFile"
   HELM_TMP="/tmp/$PROJECT_NAME"
   mkdir -p "$HELM_TMP"
   tar xf "$PLUGIN_TMP_FILE" -C "$HELM_TMP"
@@ -112,6 +118,7 @@ fail_trap() {
 
 # testVersion tests the installed client to make sure it is working.
 testVersion() {
+  echo "testVersion"
   set +e
   echo "$PROJECT_NAME installed into $HELM_PLUGIN_PATH/$PROJECT_NAME"
   # To avoid to keep track of the Windows suffix,
