@@ -51,8 +51,8 @@ Flags:
       --dos2unix                   convert FILE from DOS to Unix format (default true)
       --entrypoint stringArray     the ENTRYPOINT of the image (default [/bin/bash])
   -h, --help                       help for helm
-      --image string               image for running command (default "softleader/helm")
-      --local                      command store on local storage, not on github
+  -i, --image string               image for running command (default "softleader/helm")
+  -l, --local                      command store on local storage, not on github
       --rm                         automatically remove the container when it exits (default true)
 ```
 
