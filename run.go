@@ -72,7 +72,7 @@ func (cmd *runCmd) run() error {
 	resp, err := cli.ContainerCreate(ctx,
 		&container.Config{
 			Image:      cmd.image,
-			Entrypoint: cmd.entrypoint(),
+			Entrypoint: cmd.entryPoint,
 			WorkingDir: workDir,
 			Cmd:        cmd.cmd(),
 		}, &container.HostConfig{
@@ -125,14 +125,6 @@ func (cmd *runCmd) cmd() strslice.StrSlice {
 	} else {
 		return append([]string{"./" + cmd.command}, cmd.args...)
 	}
-}
-
-func (cmd *runCmd) entrypoint() strslice.StrSlice {
-	slice := make(strslice.StrSlice, len(cmd.entryPoint))
-	for i, v := range cmd.entryPoint {
-		slice[i] = v
-	}
-	return slice
 }
 
 func getCommandContents(command string) (contents string, err error) {
