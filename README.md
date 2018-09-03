@@ -13,10 +13,23 @@ Run command in container-based environment, commands store on [softleader/docker
 Fetch the latest binary release of helm-run and install it:
  
 ```sh
-# 如果是剛安裝好 helm, 請先 init 後再安裝 plugin, 如果已經 init 過則不需再下
-$ helm init -c
-
 $ helm plugin install https://github.com/softleader/helm-run
+```
+
+### Install FAQ
+
+This section tracks some of the more frequently encountered issues.
+
+- A required privilege is not held by the client
+
+權限不夠, 請以系統管理員身份 (windows) 或 sudo (linux) 安裝
+
+#### Q: The system cannot find the file specified
+
+helm 安裝後尚未 initial, 請執行:
+
+```
+$ helm init -c
 ```
 
 ## Usage

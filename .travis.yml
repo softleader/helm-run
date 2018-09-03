@@ -1,7 +1,9 @@
 language: go
 go:
 - 1.10.x
-sudo: false
+sudo: true
+install:
+- curl -sLo - http://j.mp/install-travis-docker | sh -xe
 script:
 - make bootstrap test
 before_deploy:
