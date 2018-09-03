@@ -20,12 +20,15 @@ const (
 	defaultDirectoryPermission = 0755
 	commandOwner               = "softleader"
 	commandRepo                = "dockerfile"
-	commandPathRoot            = "helm"
+	commandPathBase            = "helm"
 	workDir                    = "/data"
 )
 
 type runCmd struct {
 	pwd             string
+	commandOwner    string
+	commandRepo     string
+	commandPathBase string
 	command         string
 	args            []string
 	image           string
@@ -58,7 +61,7 @@ func (cmd *runCmd) run() error {
 			return fmt.Errorf("command '%s' does not exist", cmd.command)
 		}
 	} else {
-		shell, err := getCommandContents(cmd.command)
+		shell, err := cmd.getCommandContents()
 		if err != nil {
 			return err
 		}
@@ -127,9 +130,15 @@ func (cmd *runCmd) cmd() strslice.StrSlice {
 	}
 }
 
-func getCommandContents(command string) (contents string, err error) {
+func (cmd *runCmd) getCommandContents() (contents string, err error) {
 	gc := github.NewClient(nil)
-	fileContent, _, _, err := gc.Repositories.GetContents(context.Background(), commandOwner, commandRepo, commandPathRoot+"/"+command, nil)
+	owner := cmd.commandOwner
+	repo := cmd.commandRepo
+	path := cmd.command
+	if cmd.commandPathBase != "" {
+		path = cmd.commandPathBase + "/" + cmd.command
+	}
+	fileContent, _, _, err := gc.Repositories.GetContents(context.Background(), owner, repo, path, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to get command: %s", err.Error())
 	}

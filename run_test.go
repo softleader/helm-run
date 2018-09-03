@@ -40,11 +40,17 @@ func TestRun(t *testing.T) {
 }
 
 func TestGetCommandContents(t *testing.T) {
-	//c, err := getCommandContents("package")
-	//if err != nil {
-	//	t.Error(err)
-	//}
-	//if !strings.Contains(c, "#!/usr/bin/env bash") {
-	//	t.Error("package should be a bash command")
-	//}
+	runCmd := runCmd{
+		command:         "package",
+		commandOwner:    commandOwner,
+		commandRepo:     commandRepo,
+		commandPathBase: commandPathBase,
+	}
+	c, err := runCmd.getCommandContents()
+	if err != nil {
+		t.Error(err)
+	}
+	if !strings.Contains(c, "#!/usr/bin/env bash") {
+		t.Error("package should be a bash command")
+	}
 }

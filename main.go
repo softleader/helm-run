@@ -40,6 +40,9 @@ func main() {
 	f.StringArrayVarP(&runCmd.entryPoint, "entrypoint", "", []string{"/bin/bash"}, "the ENTRYPOINT of the image")
 	f.BoolVarP(&runCmd.local, "local", "", false, "command store on local storage, not on github")
 	f.BoolVarP(&runCmd.dos2unix, "dos2unix", "", true, "convert FILE from DOS to Unix format")
+	f.StringVarP(&runCmd.commandOwner, "command-owner", "o", commandOwner, "github owner of command")
+	f.StringVarP(&runCmd.commandRepo, "command-repo", "r", commandRepo, "github repo of command")
+	f.StringVarP(&runCmd.commandPathBase, "command-path-base", "p", commandPathBase, "github path base of command")
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)
