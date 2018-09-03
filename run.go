@@ -131,16 +131,16 @@ func (cmd *runCmd) cmd() strslice.StrSlice {
 }
 
 func (cmd *runCmd) getCommandContents() (contents string, err error) {
-	//gc := github.NewClient(nil)
-	//owner := cmd.commandOwner
-	//repo := cmd.commandRepo
-	//path := cmd.command
-	//if cmd.commandPathBase != "" {
-	//	path = cmd.commandPathBase + "/" + cmd.command
-	//}
-	//fileContent, _, _, err := gc.Repositories.GetContents(context.Background(), owner, repo, path, nil)
-	//if err != nil {
-	//	return "", fmt.Errorf("failed to get command: %s", err.Error())
-	//}
-	//return fileContent.GetContent()
+	gc := github.NewClient(nil)
+	owner := cmd.commandOwner
+	repo := cmd.commandRepo
+	path := cmd.command
+	if cmd.commandPathBase != "" {
+		path = cmd.commandPathBase + "/" + cmd.command
+	}
+	fileContent, _, _, err := gc.Repositories.GetContents(context.Background(), owner, repo, path, nil)
+	if err != nil {
+		return "", fmt.Errorf("failed to get command: %s", err.Error())
+	}
+	return fileContent.GetContent()
 }
