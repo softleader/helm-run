@@ -13,6 +13,9 @@ Run command in container-based environment, commands store on [softleader/docker
 Fetch the latest binary release of helm-run and install it:
  
 ```sh
+# 如果是剛安裝好 helm, 請先 init 後再安裝 plugin, 如果已經 init 過則不需再下
+$ helm init -c
+
 $ helm plugin install https://github.com/softleader/helm-run
 ```
 
@@ -27,6 +30,7 @@ $ helm run [flags] COMMAND [ARGS]
 ```sh
 Flags:
       --always-pull-image        always pull image before running command
+      --dos2unix                 convert FILE from DOS to Unix format (default true)
       --entrypoint stringArray   the ENTRYPOINT of the image (default [/bin/bash])
   -h, --help                     help for helm
       --image string             image for running command (default "softleader/helm")
