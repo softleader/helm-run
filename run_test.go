@@ -1,8 +1,8 @@
 package main
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 func TestRun(t *testing.T) {
@@ -17,6 +17,7 @@ func TestRun(t *testing.T) {
 	//defer os.RemoveAll(tmp)
 	//
 	//runCmd := runCmd{
+	//	dos2unix:   true,
 	//	command:    path.Join(strings.Replace(tmp, wd+"/", "", -1), "hello"),
 	//	args:       []string{"Matt"},
 	//	image:      "softleader/helm",
@@ -45,12 +46,12 @@ func TestGetCommandContents(t *testing.T) {
 	//}
 }
 
-func TestStrSlice(t *testing.T) {
+func TestEntrypoint(t *testing.T) {
 	ep := []string{"/bin/sh", "-c"}
 	runCmd := runCmd{
 		entryPoint: ep,
 	}
-	slice := runCmd.strSlice()
+	slice := runCmd.entrypoint()
 	fmt.Println(slice)
 	if len(slice) != len(ep) {
 		t.Errorf("length should be %v, but got %v", len(ep), len(slice))

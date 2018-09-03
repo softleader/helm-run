@@ -1,18 +1,19 @@
 package main
 
 import (
-	"github.com/docker/docker/client"
-	"github.com/docker/docker/api/types"
 	"context"
+	"fmt"
+	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/container"
+	"github.com/docker/docker/api/types/mount"
+	"github.com/docker/docker/api/types/strslice"
+	"github.com/docker/docker/client"
+	"github.com/docker/docker/pkg/stdcopy"
+	"github.com/google/go-github/github"
 	"io/ioutil"
 	"os"
-	"github.com/docker/docker/api/types/container"
-	"github.com/docker/docker/api/types/strslice"
-	"github.com/google/go-github/github"
-	"github.com/docker/docker/api/types/mount"
 	"path"
-	"fmt"
-	"github.com/docker/docker/pkg/stdcopy"
+	"strings"
 )
 
 const (
@@ -32,6 +33,7 @@ type runCmd struct {
 	rm              bool
 	entryPoint      []string
 	local           bool
+	dos2unix        bool
 }
 
 func (cmd *runCmd) run() error {
@@ -70,9 +72,9 @@ func (cmd *runCmd) run() error {
 	resp, err := cli.ContainerCreate(ctx,
 		&container.Config{
 			Image:      cmd.image,
-			Entrypoint: cmd.strSlice(),
+			Entrypoint: cmd.entrypoint(),
 			WorkingDir: workDir,
-			Cmd:        append([]string{"./" + cmd.command}, cmd.args...),
+			Cmd:        cmd.cmd(),
 		}, &container.HostConfig{
 			Mounts: []mount.Mount{
 				{
@@ -112,7 +114,20 @@ func (cmd *runCmd) run() error {
 	return nil
 }
 
-func (cmd *runCmd) strSlice() strslice.StrSlice {
+func (cmd *runCmd) cmd() strslice.StrSlice {
+	if cmd.dos2unix {
+		c := []string{fmt.Sprintf("cat ./%s | dos2unix | bash", cmd.command)}
+		if len(cmd.args) > 0 {
+			c = append(c, "-s")
+			c = append(c, cmd.args...)
+		}
+		return []string{"-c", strings.Join(c, " ")}
+	} else {
+		return append([]string{"./" + cmd.command}, cmd.args...)
+	}
+}
+
+func (cmd *runCmd) entrypoint() strslice.StrSlice {
 	slice := make(strslice.StrSlice, len(cmd.entryPoint))
 	for i, v := range cmd.entryPoint {
 		slice[i] = v

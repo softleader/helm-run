@@ -3,8 +3,8 @@ package main
 import (
 	"errors"
 	"fmt"
-	"os"
 	"github.com/spf13/cobra"
+	"os"
 )
 
 const desc = `
@@ -39,6 +39,7 @@ func main() {
 	f.BoolVarP(&runCmd.rm, "rm", "", true, "automatically remove the container when it exits")
 	f.StringArrayVarP(&runCmd.entryPoint, "entrypoint", "", []string{"/bin/bash"}, "the ENTRYPOINT of the image")
 	f.BoolVarP(&runCmd.local, "local", "", false, "command store on local storage, not on github")
+	f.BoolVarP(&runCmd.dos2unix, "dos2unix", "", true, "convert FILE from DOS to Unix format")
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)
