@@ -8,6 +8,8 @@ Run command in container-based environment, commands store on [softleader/docker
 
 ![](./artitecture.svg)
 
+> helm-run requires docker installed
+
 ## Install
 
 Fetch the latest binary release of helm-run and install it:
