@@ -18,19 +18,19 @@ $ helm plugin install https://github.com/softleader/helm-run
 
 ### Install FAQ
 
-This section tracks some of the more frequently encountered issues.
+以下收集了常見的安裝問題
 
-- A required privilege is not held by the client
+#### Q: A required privilege is not held by the client
 
 權限不夠, 請以系統管理員身份 (windows) 或 sudo (linux) 安裝
 
 #### Q: The system cannot find the file specified
 
-helm 安裝後尚未 initial, 請執行:
+安裝 helm 後尚未 initial, 請執行 `helm init -c` 後再次安裝
 
-```
-$ helm init -c
-```
+#### Q: exec: "sh": executable file not found in %PATH%
+
+Windows 使用者必須開著 docker 執行安裝
 
 ## Usage
 
