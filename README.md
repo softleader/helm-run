@@ -44,13 +44,16 @@ $ helm run [flags] COMMAND [ARGS]
 
 ```sh
 Flags:
-      --always-pull-image        always pull image before running command
-      --dos2unix                 convert FILE from DOS to Unix format (default true)
-      --entrypoint stringArray   the ENTRYPOINT of the image (default [/bin/bash])
-  -h, --help                     help for helm
-      --image string             image for running command (default "softleader/helm")
-      --local                    command store on local storage, not on github
-      --rm                       automatically remove the container when it exits (default true)
+      --always-pull-image          always pull image before running command
+  -o, --command-owner string       github owner of command (default "softleader")
+  -p, --command-path-base string   github path base of command (default "helm")
+  -r, --command-repo string        github repo of command (default "dockerfile")
+      --dos2unix                   convert FILE from DOS to Unix format (default true)
+      --entrypoint stringArray     the ENTRYPOINT of the image (default [/bin/bash])
+  -h, --help                       help for helm
+      --image string               image for running command (default "softleader/helm")
+      --local                      command store on local storage, not on github
+      --rm                         automatically remove the container when it exits (default true)
 ```
 
 ### Command
