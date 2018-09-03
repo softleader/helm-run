@@ -18,7 +18,7 @@ $ helm plugin install https://github.com/softleader/helm-run
 
 ### Install FAQ
 
-以下收集了常見的安裝問題
+This section tracks some of the more frequently encountered issues.
 
 #### Q: A required privilege is not held by the client
 
