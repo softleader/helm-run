@@ -30,7 +30,7 @@ This section tracks some of the more frequently encountered issues.
 
 #### Q: exec: "sh": executable file not found in %PATH%
 
-Windows 使用者必須開著 docker 執行安裝
+Windows 使用者必須開著 docker 進行 plugin 的安裝
 
 ## Usage
 
