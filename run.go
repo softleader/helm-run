@@ -22,6 +22,8 @@ const (
 	commandRepo                = "dockerfile"
 	commandPathBase            = "helm"
 	workDir                    = "/data"
+	image                      = "softleader/helm"
+	entrypoint                 = "/bin/bash"
 )
 
 type runCmd struct {
@@ -31,12 +33,11 @@ type runCmd struct {
 	commandPathBase string
 	command         string
 	args            []string
-	image           string
 	alwaysPullImage bool
 	rm              bool
-	entryPoint      []string
 	local           bool
 	dos2unix        bool
+	make            bool
 }
 
 func (cmd *runCmd) run() error {
@@ -48,7 +49,7 @@ func (cmd *runCmd) run() error {
 	}
 
 	if cmd.alwaysPullImage {
-		_, err = cli.ImagePull(ctx, cmd.image, types.ImagePullOptions{})
+		_, err = cli.ImagePull(ctx, image, types.ImagePullOptions{})
 		if err != nil {
 			return err
 		}
@@ -74,8 +75,8 @@ func (cmd *runCmd) run() error {
 
 	resp, err := cli.ContainerCreate(ctx,
 		&container.Config{
-			Image:      cmd.image,
-			Entrypoint: cmd.entryPoint,
+			Image:      image,
+			Entrypoint: []string{entrypoint},
 			WorkingDir: workDir,
 			Cmd:        cmd.cmd(),
 		}, &container.HostConfig{
@@ -118,7 +119,11 @@ func (cmd *runCmd) run() error {
 }
 
 func (cmd *runCmd) cmd() strslice.StrSlice {
-	if cmd.dos2unix {
+	if cmd.make {
+		c := []string{fmt.Sprintf("make -f ./%s", cmd.command)}
+		c = append(c, cmd.args...)
+		return []string{"-c", strings.Join(c, " ")}
+	} else if cmd.dos2unix {
 		c := []string{fmt.Sprintf("cat ./%s | dos2unix | bash", cmd.command)}
 		if len(cmd.args) > 0 {
 			c = append(c, "-s")
@@ -126,7 +131,9 @@ func (cmd *runCmd) cmd() strslice.StrSlice {
 		}
 		return []string{"-c", strings.Join(c, " ")}
 	} else {
-		return append([]string{"./" + cmd.command}, cmd.args...)
+		c := []string{fmt.Sprintf("./%s", cmd.command)}
+		c = append(c, cmd.args...)
+		return c
 	}
 }
 
