@@ -39,10 +39,10 @@ func main() {
 	f.BoolVarP(&runCmd.local, "local", "l", false, "command store on local storage, not on github")
 	f.BoolVarP(&runCmd.make, "make", "m", false, "executed via GNU make utility, not bash")
 	f.BoolVarP(&runCmd.dos2unix, "dos2unix", "", true, "convert FILE from DOS to Unix format")
-	f.StringVarP(&runCmd.commandOwner, "command-owner", "", commandOwner, "github owner of command")
-	f.StringVarP(&runCmd.commandRepo, "command-repo", "", commandRepo, "github repo of command")
-	f.StringVarP(&runCmd.commandPathBase, "command-path-base", "", commandPathBase, "github path base of command")
-	f.StringVarP(&runCmd.commandToken, "command-token", "", "", "github access token of command")
+	f.StringVarP(&runCmd.owner, "owner", "", owner, "github owner of command")
+	f.StringVarP(&runCmd.repo, "repo", "", repo, "github repo of command")
+	f.StringVarP(&runCmd.pathBase, "path-base", "", pathBase, "github path base of command")
+	f.StringVarP(&runCmd.token, "token", "", "", "github access token of command")
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)

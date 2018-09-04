@@ -19,9 +19,9 @@ import (
 
 const (
 	defaultDirectoryPermission = 0755
-	commandOwner               = "softleader"
-	commandRepo                = "dockerfile"
-	commandPathBase            = "helm"
+	owner                      = "softleader"
+	repo                       = "dockerfile"
+	pathBase                   = "helm"
 	workDir                    = "/data"
 	image                      = "softleader/helm"
 	entrypoint                 = "/bin/bash"
@@ -29,10 +29,10 @@ const (
 
 type runCmd struct {
 	pwd             string
-	commandOwner    string
-	commandRepo     string
-	commandPathBase string
-	commandToken    string
+	owner           string
+	repo            string
+	pathBase        string
+	token           string
 	command         string
 	args            []string
 	alwaysPullImage bool
@@ -142,21 +142,19 @@ func (cmd *runCmd) cmd() strslice.StrSlice {
 func (cmd *runCmd) getCommandContents() (contents string, err error) {
 	ctx := context.Background()
 	var client *github.Client
-	if cmd.commandToken != "" {
+	if cmd.token != "" {
 		ctx := context.Background()
-		ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: cmd.commandToken})
+		ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: cmd.token})
 		tc := oauth2.NewClient(ctx, ts)
 		client = github.NewClient(tc)
 	} else {
 		client = github.NewClient(nil)
 	}
-	owner := cmd.commandOwner
-	repo := cmd.commandRepo
 	path := cmd.command
-	if cmd.commandPathBase != "" {
-		path = cmd.commandPathBase + "/" + cmd.command
+	if cmd.pathBase != "" {
+		path = cmd.pathBase + "/" + cmd.command
 	}
-	fileContent, _, _, err := client.Repositories.GetContents(ctx, owner, repo, path, nil)
+	fileContent, _, _, err := client.Repositories.GetContents(ctx, cmd.owner, cmd.repo, path, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to get command: %s", err.Error())
 	}

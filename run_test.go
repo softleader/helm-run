@@ -1,10 +1,6 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"github.com/google/go-github/github"
-	"golang.org/x/oauth2"
 	"io/ioutil"
 	"os"
 	"path"
@@ -83,35 +79,12 @@ func TestGetCommandContents(t *testing.T) {
 	//	commandRepo:     commandRepo,
 	//	commandPathBase: commandPathBase,
 	//}
-	runCmd := runCmd{
-		command:         "package",
-		commandOwner:    commandOwner,
-		commandRepo:     "softleader-chart",
-		commandPathBase: "project/azalea",
-		commandToken:    "1e76d88a4204c0c54d234b35f88083db2e5ef4de",
-	}
-	c, err := runCmd.getCommandContents()
-	if err != nil {
-		t.Error(err)
-	}
-	fmt.Println(c)
-	if !strings.Contains(c, "#!/usr/bin/env bash") {
-		t.Error("package should be a bash command")
-	}
-}
-
-func TestGet(t *testing.T) {
-	ctx := context.Background()
-	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: "1e76d88a4204c0c54d234b35f88083db2e5ef4de"})
-	tc := oauth2.NewClient(ctx, ts)
-	client := github.NewClient(tc)
-
-	// list all repositories for the authenticated user
-	repos, _, err := client.Repositories.List(ctx, "softleader", nil)
-	if err != nil {
-		t.Error(err)
-	}
-	for _, r := range repos {
-		fmt.Println(r)
-	}
+	//c, err := runCmd.getCommandContents()
+	//if err != nil {
+	//	t.Error(err)
+	//}
+	//fmt.Println(c)
+	//if !strings.Contains(c, "#!/usr/bin/env bash") {
+	//	t.Error("package should be a bash command")
+	//}
 }
