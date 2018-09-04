@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/softleader/helm-run.svg?branch=master)](https://travis-ci.org/softleader/helm-run)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/softleader/helm-runs/blob/master/LICENSE)
+[![Build Status](https://github-basic-badges.herokuapp.com/release/softleader/helm-run.svg)](https://github.com/softleader/helm-run/releases)
 
 # Helm Run Plugin
 
