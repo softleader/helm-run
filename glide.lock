@@ -1,5 +1,5 @@
-hash: ca9142a353515c508a419b013025e259f29c080f1aea84f28686dcaa54c8d5a3
-updated: 2018-08-13T12:41:01.331423+08:00
+hash: 9903d177208138b7401fe4706f0ae100ea498da12fe383427e3e83fd10f60d7e
+updated: 2018-09-04T17:46:39.766781+08:00
 imports:
 - name: github.com/docker/distribution
   version: 5f37adaa4107540c84856b1c4f912c9332aafae9
@@ -40,8 +40,12 @@ imports:
   version: 47565b4f722fb6ceae66b95f853feed578a4a51c
 - name: github.com/docker/libtrust
   version: aabc10ec26b754e797f9028f4589c5b7bd90dc20
+- name: github.com/golang/protobuf
+  version: b27b920f9e71b439b873b17bf99f56467623814a
+  subpackages:
+  - proto
 - name: github.com/google/go-github
-  version: 747f93dd9b489bd56f7442b3c42bfea12800a75b
+  version: 08dbadce1a0514f79ea9a9aa91b2f12ba656d5a7
   subpackages:
   - github
 - name: github.com/google/go-querystring
@@ -75,9 +79,23 @@ imports:
   - context/ctxhttp
   - internal/socks
   - proxy
+- name: golang.org/x/oauth2
+  version: d2e6202438beef2727060aa7cabdd924d92ebfd9
+  subpackages:
+  - internal
 - name: golang.org/x/sys
   version: 98c5dad5d1a0e8a73845ecc8897d0bd56586511d
   subpackages:
   - unix
   - windows
+- name: google.golang.org/appengine
+  version: 03cac3b07182cfb08c0d0c0b6ee72a1ceb151c92
+  subpackages:
+  - internal
+  - internal/base
+  - internal/datastore
+  - internal/log
+  - internal/remote_api
+  - internal/urlfetch
+  - urlfetch
 testImports: []

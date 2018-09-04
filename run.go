@@ -10,6 +10,7 @@ import (
 	"github.com/docker/docker/client"
 	"github.com/docker/docker/pkg/stdcopy"
 	"github.com/google/go-github/github"
+	"golang.org/x/oauth2"
 	"io/ioutil"
 	"os"
 	"path"
@@ -31,6 +32,7 @@ type runCmd struct {
 	commandOwner    string
 	commandRepo     string
 	commandPathBase string
+	commandToken    string
 	command         string
 	args            []string
 	alwaysPullImage bool
@@ -138,14 +140,23 @@ func (cmd *runCmd) cmd() strslice.StrSlice {
 }
 
 func (cmd *runCmd) getCommandContents() (contents string, err error) {
-	gc := github.NewClient(nil)
+	ctx := context.Background()
+	var client *github.Client
+	if cmd.commandToken != "" {
+		ctx := context.Background()
+		ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: cmd.commandToken})
+		tc := oauth2.NewClient(ctx, ts)
+		client = github.NewClient(tc)
+	} else {
+		client = github.NewClient(nil)
+	}
 	owner := cmd.commandOwner
 	repo := cmd.commandRepo
 	path := cmd.command
 	if cmd.commandPathBase != "" {
 		path = cmd.commandPathBase + "/" + cmd.command
 	}
-	fileContent, _, _, err := gc.Repositories.GetContents(context.Background(), owner, repo, path, nil)
+	fileContent, _, _, err := client.Repositories.GetContents(ctx, owner, repo, path, nil)
 	if err != nil {
 		return "", fmt.Errorf("failed to get command: %s", err.Error())
 	}

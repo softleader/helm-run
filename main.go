@@ -42,6 +42,7 @@ func main() {
 	f.StringVarP(&runCmd.commandOwner, "command-owner", "", commandOwner, "github owner of command")
 	f.StringVarP(&runCmd.commandRepo, "command-repo", "", commandRepo, "github repo of command")
 	f.StringVarP(&runCmd.commandPathBase, "command-path-base", "", commandPathBase, "github path base of command")
+	f.StringVarP(&runCmd.commandToken, "command-token", "", "", "github access token of command")
 
 	if err := cmd.Execute(); err != nil {
 		os.Exit(1)
