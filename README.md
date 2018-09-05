@@ -9,7 +9,7 @@ Run command in container-based environment, commands store on [softleader/docker
 
 ![](./artitecture.svg)
 
-> helm-run requires docker installed
+> helm-run requires [helm](https://docs.helm.sh/using_helm/#installing-helm) and [docker](https://www.docker.com/get-started) installed
 
 ## Install
 
