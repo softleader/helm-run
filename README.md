@@ -33,7 +33,7 @@ This section tracks some of the more frequently encountered issues.
 
 #### Q: exec: "sh": executable file not found in %PATH%
 
-Windows 使用者必須開著 docker 進行 plugin 的安裝
+Windows 使用者必須開著 docker 進行 plugin 的安裝, 若還是遇到問題, 建議開著 docker 以 bash (如 Git Bash) 執行
 
 #### Q: Error: exec: "C:\\Users\\Default": file does not exist
 
