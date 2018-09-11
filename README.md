@@ -93,12 +93,20 @@ $ helm run subdir/mypackage
 
 #### Q: Error: No such image: softleader/helm
 
-helm run 是 container-based 的 runtime 環境, 預設使用 image 為: [softleader/helm](https://github.com/softleader/dockerfile/tree/master/helm), 第一次執行時請加上 update image 參數: `helm run -U package`
+helm run 是 container-based 的 runtime 環境, 預設使用 image 為: [softleader/helm](https://github.com/softleader/dockerfile/tree/master/helm), 第一次執行時請加上 update image 參數: 
+
+```sh
+$ helm run -U package
+```
 
 > update 之後的 helm run 即不用再下 `-U`
 
 #### Q: /bin/bash: make: command not found
 
-也許是你 local 的 image 新版本過舊但使用到了新的功能, 建議在 helm run 時加上 update image 參數更新 image: `helm run -U package`
+也許是你 local 的 image 新版本過舊但使用到了新的功能, 建議在 helm run 時加上 update image 參數更新 image:
+
+```sh
+$ helm run -U package
+```
 
 > update 之後的 helm run 即不用再下 `-U`
