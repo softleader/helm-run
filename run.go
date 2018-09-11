@@ -8,7 +8,9 @@ import (
 	"github.com/docker/docker/api/types/mount"
 	"github.com/docker/docker/api/types/strslice"
 	"github.com/docker/docker/client"
+	"github.com/docker/docker/pkg/jsonmessage"
 	"github.com/docker/docker/pkg/stdcopy"
+	"github.com/docker/docker/pkg/term"
 	"github.com/google/go-github/github"
 	"golang.org/x/oauth2"
 	"io/ioutil"
@@ -28,18 +30,18 @@ const (
 )
 
 type runCmd struct {
-	pwd             string
-	owner           string
-	repo            string
-	pathBase        string
-	token           string
-	command         string
-	args            []string
-	alwaysPullImage bool
-	rm              bool
-	local           bool
-	dos2unix        bool
-	make            bool
+	pwd         string
+	owner       string
+	repo        string
+	pathBase    string
+	token       string
+	command     string
+	args        []string
+	updateImage bool
+	rm          bool
+	local       bool
+	dos2unix    bool
+	make        bool
 }
 
 func (cmd *runCmd) run() error {
@@ -50,11 +52,14 @@ func (cmd *runCmd) run() error {
 		return err
 	}
 
-	if cmd.alwaysPullImage {
-		_, err = cli.ImagePull(ctx, image, types.ImagePullOptions{})
+	if cmd.updateImage {
+		out, err := cli.ImagePull(ctx, image, types.ImagePullOptions{})
 		if err != nil {
 			return err
 		}
+		defer out.Close()
+		termFd, isTerm := term.GetFdInfo(os.Stderr)
+		jsonmessage.DisplayJSONMessagesStream(out, os.Stdout, termFd, isTerm, nil)
 	}
 
 	if cmd.local {
@@ -115,7 +120,7 @@ func (cmd *runCmd) run() error {
 	if err != nil {
 		return err
 	}
-
+	defer out.Close()
 	stdcopy.StdCopy(os.Stdout, os.Stderr, out)
 	return nil
 }

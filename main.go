@@ -34,7 +34,7 @@ func main() {
 		},
 	}
 	f := cmd.Flags()
-	f.BoolVarP(&runCmd.alwaysPullImage, "always-pull-image", "", false, "always pull image before running command")
+	f.BoolVarP(&runCmd.updateImage, "update-image", "U", false, "update image before running command")
 	f.BoolVarP(&runCmd.rm, "rm", "", true, "automatically remove the container when it exits")
 	f.BoolVarP(&runCmd.local, "local", "l", false, "command store on local storage, not on github")
 	f.BoolVarP(&runCmd.make, "make", "m", false, "executed via GNU make utility, not bash")

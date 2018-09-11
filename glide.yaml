@@ -6,6 +6,8 @@ import:
   version: ^17.5.0-ce-rc3
   subpackages:
   - client
+  - pkg/jsonmessage
 - package: golang.org/x/oauth2
 - package: github.com/google/go-github
   version: ^18.0.0
+- package: github.com/Nvveen/Gotty
