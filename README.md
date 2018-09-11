@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/softleader/helm-run.svg?branch=master)](https://travis-ci.org/softleader/helm-run)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/softleader/helm-runs/blob/master/LICENSE)
+[![Build Status](https://github-basic-badges.herokuapp.com/release/softleader/helm-run.svg)](https://github.com/softleader/helm-run/releases)
 
 # Helm Run Plugin
 
@@ -8,7 +9,7 @@ Run command in container-based environment, commands store on [softleader/docker
 
 ![](./artitecture.svg)
 
-> helm-run requires docker installed
+> helm-run requires [helm](https://docs.helm.sh/using_helm/#installing-helm) and [docker](https://www.docker.com/get-started) installed
 
 ## Install
 
@@ -32,7 +33,11 @@ This section tracks some of the more frequently encountered issues.
 
 #### Q: exec: "sh": executable file not found in %PATH%
 
-Windows 使用者必須開著 docker 進行 plugin 的安裝
+Windows 使用者必須開著 docker 進行 plugin 的安裝, 若還是遇到問題, 建議開著 docker 以 bash (如 Git Bash) 執行
+
+#### Q: Error: exec: "C:\\Users\\Default": file does not exist
+
+helm home 預設在使用者目錄下, 但如果使用者名稱有空白字元時會造成 helm 執行錯, 因此建議調整 helm home: 設定環境變數 `HELM_HOME` 指到 `C:\.helm` 後, 重新 initial helm
 
 ## Usage
 
