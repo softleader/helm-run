@@ -4,10 +4,21 @@
 
 # Helm Run Plugin
 
-Run command in container-based environment, commands store on [softleader/dockerfile/helm](https://github.com/softleader/dockerfile/tree/master/helm
-)
+Run bash command in container-based environment.
 
 ![](./artitecture.svg)
+
+To run commands that store on [softleader/dockerfile/helm](https://github.com/softleader/dockerfile/tree/master/helm)
+
+	$ helm run package
+
+To run command on local, use `-l`:
+
+	$ helm run -l path/to/script
+
+To execute via GNU make utility, not bash, use `-m`:
+
+	$ helm run -lm path/to/Makefile
 
 > helm-run requires [helm](https://docs.helm.sh/using_helm/#installing-helm) and [docker](https://www.docker.com/get-started) installed
 

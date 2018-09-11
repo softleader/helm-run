@@ -8,8 +8,19 @@ import (
 )
 
 const desc = `
-Run command in container-based environment, commands store on https://github.com/softleader/dockerfile/tree/master/helm 
-	$ helm run package"
+Run bash command in container-based environment.
+
+To run commands that store on https://github.com/softleader/dockerfile/tree/master/helm
+	
+	$ helm run package
+
+To run command on local, use '-l':
+
+	$ helm run -l path/to/script
+
+To execute via GNU make utility, not bash, use '-m':
+
+	$ helm run -lm path/to/Makefile
 `
 
 func main() {
