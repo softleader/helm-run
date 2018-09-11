@@ -113,6 +113,6 @@ $ helm run -U package
 
 #### Q: 以上都做了, 但在 windows 還是跑得很奇怪
 
-將 docker 設定中, Network > DNS Server 改成 fixed 再試試看
+將 docker 設定中, Network > DNS Server 改成 Fixed 再試試看
 
 ![](https://zxtech.files.wordpress.com/2016/09/image3.png)
