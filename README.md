@@ -88,3 +88,16 @@ $ helm run subdir/mypackage
 ### Args
 
 會被繼續傳入執行 shell 的 args 中
+
+### Usage FAQ
+
+#### Q: /bin/bash: make: command not found
+
+helm run 是 container-based 的 runtime 環境, 預設使用 image 為: [softleader/helm](https://github.com/softleader/dockerfile/tree/master/helm), 也許是你 local 的 image 新版本過舊但使用到了新的功能, 建議在下一次 helm run 時加上 update image 參數:
+
+```
+helm run -U package
+```
+
+ > update 之後的 helm run 即不用再下 `-U`
+
