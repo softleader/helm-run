@@ -111,7 +111,7 @@ $ helm run -U package
 
 > update 之後的 helm run 即不用再下 `-U`
 
-#### Q: 已上都做了, 但在 windows 還是跑得很奇怪
+#### Q: 以上都做了, 但在 windows 還是跑得很奇怪
 
 將 docker 設定中, Network > DNS Server 改成 fixed 再試試看
 
