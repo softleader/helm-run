@@ -16,6 +16,7 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -63,11 +64,11 @@ func (cmd *runCmd) run() error {
 	}
 
 	if cmd.local {
-		// verify local command file exists
 		_, err := os.Stat(cmd.command)
 		if os.IsNotExist(err) {
 			return fmt.Errorf("command '%s' does not exist", cmd.command)
 		}
+		cmd.command = filepath.ToSlash(cmd.command)
 	} else {
 		shell, err := cmd.getCommandContents()
 		if err != nil {
