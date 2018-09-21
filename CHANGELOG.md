@@ -1,5 +1,8 @@
 # Change Log
 
+## [1.8.0](https://github.com/softleader/helm-run/tree/1.8.0) (2018-09-21)
+[Full Changelog](https://github.com/softleader/helm-run/compare/1.7.0...1.8.0)
+
 ## [1.7.0](https://github.com/softleader/helm-run/tree/1.7.0) (2018-09-11)
 [Full Changelog](https://github.com/softleader/helm-run/compare/1.6.0...1.7.0)
 
