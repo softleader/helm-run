@@ -24,8 +24,18 @@ To execute via GNU make utility, not bash, use `-m`:
 
 ## Install
 
-Fetch the latest binary release of helm-run and install it:
- 
+需要先安裝 helm (請安裝2.x.x版, 3.x.x不適用)
+
+https://helm.sh/docs/intro/install/
+
+安裝helm後 先進行環境初始化
+```sh
+$ helm init -c
+```
+
+安裝 helm-run
+
+**注意此段指令必須使用shell執行, windows系統請使用系統管理員開啟git-bash執行**
 ```sh
 $ helm plugin install https://github.com/softleader/helm-run
 ```
