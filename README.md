@@ -20,7 +20,7 @@ To execute via GNU make utility, not bash, use `-m`:
 
 	$ helm run -lm path/to/Makefile
 
-> helm-run requires [helm](https://docs.helm.sh/using_helm/#installing-helm) and [docker](https://www.docker.com/get-started) installed
+> helm-run requires [helm](https://docs.helm.sh/using_helm/#installing-helm) version 2 and [docker](https://www.docker.com/get-started) installed
 
 ## Install
 
